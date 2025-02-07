@@ -1,11 +1,21 @@
 "use client";
 
-import { useGetProductsQuery } from "@/state/api";
+import { useCreateProductMutation, useGetProductsQuery } from "@/state/api";
 import React, { useState } from "react";
 import LoadingModal from "@/app/(components)/LoadingModal";
 import { PlusCircleIcon, SearchIcon } from "lucide-react";
 import Header from "@/app/(components)/Header/Header";
 import Rating from "@/app/(components)/Rating/Rating";
+import CreateProductModal from "./CreateProductModal";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+type ProductFormDataProps = {
+  name: string;
+  price: number;
+  stockQuantity: number;
+  rating: number;
+};
 
 const Products = () => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -16,6 +26,21 @@ const Products = () => {
     isError,
     isLoading,
   } = useGetProductsQuery(searchValue);
+
+  const [createProduct] = useCreateProductMutation();
+
+  const handleCreateProduct = async (productData: ProductFormDataProps) => {
+    try {
+      await createProduct(productData).unwrap();
+      toast.success("Product Created Successfully!", {
+        position: "top-center",
+      });
+    } catch (error: any) {
+      toast.error(`Error: ${error.message || "Failed to create product"}`, {
+        position: "top-center",
+      });
+    }
+  };
 
   if (isLoading) {
     return <LoadingModal />;
@@ -83,6 +108,15 @@ const Products = () => {
           ))
         )}
       </div>
+
+      {/* Modal */}
+
+      <CreateProductModal
+        isOpen={isModalOpen}
+        isLoading={isLoading}
+        onClose={() => setIsModalOpen(false)}
+        onCreate={handleCreateProduct}
+      />
     </div>
   );
 };

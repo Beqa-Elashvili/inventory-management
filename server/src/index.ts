@@ -19,6 +19,8 @@ app.use(cors());
 
 app.use("/dashboard", dashboardRoutes);
 app.use("/products", productRoutes);
+
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

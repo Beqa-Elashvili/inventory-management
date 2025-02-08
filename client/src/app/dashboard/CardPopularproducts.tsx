@@ -2,13 +2,14 @@ import { useGetDashboardMetricsQuery } from "@/state/api";
 import { ShoppingBag } from "lucide-react";
 import React from "react";
 import Rating from "../(components)/Rating/Rating";
+import LoadingModal from "../(components)/LoadingModal";
 
 function CardPopularproducts() {
   const { data: dashboardMetrics, isLoading } = useGetDashboardMetricsQuery();
   return (
     <div className="row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl pb-16">
       {isLoading ? (
-        <div className="m-5">Loading...</div>
+        <div className="m-5"><LoadingModal /></div>
       ) : (
         <>
           <h3 className="text-lg font-semibold px-7 py-5 pb-2">

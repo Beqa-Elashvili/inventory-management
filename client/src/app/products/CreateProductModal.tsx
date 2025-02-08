@@ -24,7 +24,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
   onCreate,
 }) => {
   const [formData, setFormData] = useState({
-    ProductId: uuid(),
+    productId: uuid(),
     name: "",
     price: 0,
     rating: 0,
@@ -37,7 +37,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
       ...prev,
       [name]:
         name === "price" || name === "stockQuantity" || name === "rating"
-          ? parseInt(value)
+          ? parseFloat(value)
           : value,
     }));
   };
@@ -77,11 +77,11 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
             Product Price
           </label>
           <input
-            type="text"
+            type="number"
             name="price"
             placeholder="Product Price"
             onChange={handleChange}
-            value={formData.name}
+            value={formData.price}
             className="block w-full p-2 mb-2 border-2 border-gray-500  rounded-md"
           />
 
@@ -92,11 +92,11 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
             Stock Quantity
           </label>
           <input
-            type="text"
+            type="number"
             name="stockQuantity"
             placeholder="Stock Quantity"
             onChange={handleChange}
-            value={formData.name}
+            value={formData.stockQuantity}
             className="block w-full p-2 mb-2 border-2 border-gray-500  rounded-md"
           />
 
@@ -107,16 +107,16 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
             Rating
           </label>
           <input
-            type="text"
+            type="number"
             name="rating"
             placeholder="Rating"
             onChange={handleChange}
-            value={formData.name}
+            value={formData.rating}
             className="block w-full p-2 mb-2 border-2 border-gray-500  rounded-md"
           />
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            className="px-4 mt-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
           >
             Create
             <CircleLoader size={24} loading={isLoading} />
